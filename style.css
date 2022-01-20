@@ -1,0 +1,15 @@
+#playArea {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 480px;
+  width: 480px;
+  justify-content: center;
+  gap: 10px;
+}
+
+#playArea div{
+  outline: 1px solid black;
+  height: 150px;
+  width: 150px;
+}

@@ -2,13 +2,34 @@
 
 <html>
   <head>
-    <title>WEBSITE NAME</title>
+    <title>TIC TAC TOE</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <script src="javaScript.js" defer></script>
   </head>
 
   <body>
+    <div>
+      <form id="playerData">
+        <label for="player1">Player 1(x):</label>
+        <input type="text" id="player1" name="player1"><br>
+        <label for="player2">Player 2(o):</label>
+        <input type="text" id="player2" name="player2"><br>
+      </form>
+      <button id="startGame"> Start the Game! </button>
+    </div>
+
+    <div id="playArea">
+      <div slot="0"></div>
+      <div slot="1"></div>
+      <div slot="2"></div>
+      <div slot="3"></div>
+      <div slot="4"></div>
+      <div slot="5"></div>
+      <div slot="6"></div>
+      <div slot="7"></div>
+      <div slot="8"></div>
+    </div>
 
   </body>
 
