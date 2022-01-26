@@ -3,18 +3,13 @@ const startGame = document.querySelector('#startGame');
 const playArea = document.querySelector('#playArea');
 
 // Tic Tac Toe Function
-
+  // Modules
 const gameBoard = (() => {
   const board = [,,,,,,,,,];
-  return {
-    board
-  };
+
+  return {board };
 })();
 
-const playerFactory = (name, shape) => {
-  const move = (place) => gameBoard.board[place] = shape;
-  return {name, shape, move};
-};
 
 const gameMaster = (() => {
   const gameWin = (board, piece) => {
@@ -26,14 +21,46 @@ const gameMaster = (() => {
     if (board[2] == piece && board[5] == piece && board[8] == piece) return 1;
     if (board[0] == piece && board[4] == piece && board[8] == piece) return 1;
     if (board[2] == piece && board[4] == piece && board[6] == piece) return 1;
-    return 0
+    return 0;
     }
-  
-  return {
-    gameWin
-  };
+  const gameTie = (board) => {
+    let zero = 0;
+
+
+  }
+  const playSpot = playArea.addEventListener('click', function(event) {
+    boardSpot = event.originalTarget.slot;
+    console.log(boardSpot);
+  });
+  return {gameWin, playArea };
 
 })();
+
+  // Factories
+
+const playerFactory = (name, shape) => {
+  const move = (place) => {
+    if (gameBoard.board[place] == "undefined") {
+      gameBoard.board[place] = shape;
+
+    }
+  }
+  return {name, shape, move};
+};
+
+const boxMaker = (board) => {
+  while(playArea.firstChild) {
+    playArea.removeChild(playArea.lastChild);
+  }
+  for (let i = 0; i < board.length; i++) {
+    const newBox = document.createElement('div');
+
+    newBox.textContent = board[i];
+    newBox.setAttribute('slot', i);
+
+    playArea.appendChild(newBox);
+  }
+}
 
 
 // DOM Manipulation
@@ -45,16 +72,14 @@ function playerStart () {
   return playerNames;
 }
 
+
 // Button Function
 
 startGame.addEventListener('click', function(event) {
   let newGame = playerStart();
+  boxMaker(gameBoard.board);
 });
 
-playeArea.addEventListener('click', function(event) {
-  boardSpot = event.originalTarget.slot;
-
-}
 
 // Running a Game
 
@@ -62,3 +87,4 @@ playerNames = playerStart();
 let player1 = playerFactory(playerNames[0], 'x');
 let player2 = playerFactory(playerNames[1], 'o');
 
+gameMaster.playSpot;
