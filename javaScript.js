@@ -1,13 +1,15 @@
 const playerData = document.querySelector('#playerData');
 const startGame = document.querySelector('#startGame');
 const playArea = document.querySelector('#playArea');
+const boardWipe = document.querySelector('#boardWipe');
+const gameAlert = document.querySelector('#gameAlert');
 
 // Tic Tac Toe Function
   // Modules
 
 const gameMaster = (() => {
   const board = [,,,,,,,,,];
-
+  
   const yourTurn = (board) => {
     let numOfX = 0;
     let numOfO = 0;
@@ -37,33 +39,44 @@ const gameMaster = (() => {
     }
   
   const didYouWin = (board, player) => {
+    let winString = '';
     if (winConditions(board, player.shape)) {
-      console.log(player.name + " wins!!")
+      if (player.name != "") {
+        winString = player.name + ' wins!';
+      } else {
+        winString = player.shape + ' wins!';
+      }
     }
-
+    gameAlert.textContent = winString;
+  }
+  
+  const tieGame = (board) => {
+    tieString = 'Tie Game!';
+    gameAlert.textContent = tieString;
   }
   
   const playSpot = playArea.addEventListener('click', function(event) {
     boardSpot = parseInt(event.originalTarget.slot);
     whoseTurn = yourTurn(gameMaster.board);
 
-    switch (whoseTurn) {
-      case 0: 
-        gameMaster.board[boardSpot] = player1.shape;
-        didYouWin(gameMaster.board, player1);
-        break;
-      case 1:
-        gameMaster.board[boardSpot] = player2.shape;
-        didYouWin(gameMaster.board, player2);
-        break;
-      case 2:
-        let zero = 0;
-        break;
+    if ((gameAlert.textContent == '') && (gameMaster.board[boardSpot] == null)) {
+      switch (whoseTurn) {
+        case 0: 
+          gameMaster.board[boardSpot] = player1.shape;
+          didYouWin(gameMaster.board, player1);
+          break;
+        case 1:
+          gameMaster.board[boardSpot] = player2.shape;
+          didYouWin(gameMaster.board, player2);
+          break;
+        case 2:
+          gameMaster.tieGame(gameMaster.board);
+          break;
+      }
     }
     boxMaker(gameMaster.board);
   });
-  return {board, yourTurn, winConditions, didYouWin,  playArea };
-
+  return {board, yourTurn, winConditions, didYouWin, tieGame,  playArea };
 })();
 
   // Factories
@@ -93,6 +106,8 @@ const boxMaker = (board) => {
 
 function playerStart () {
   let data = document.getElementById("playerData");
+  gameMaster.board = [,,,,,,,,,];
+  gameAlert.textContent = '';
 
   let playerNames = [data.elements[0].value, data.elements[1].value];
   return playerNames;
@@ -104,6 +119,12 @@ function playerStart () {
 startGame.addEventListener('click', function(event) {
   let newGame = playerStart();
   boxMaker(gameMaster.board);
+});
+
+boardWipe.addEventListener('click', function(event) {
+  let newGame = playerStart();
+  boxMaker(gameMaster.board);
+
 });
 
 
