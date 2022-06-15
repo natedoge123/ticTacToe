@@ -23,7 +23,6 @@ const gameMaster = (() => {
     }
     if (numOfX == numOfO) return 0;
     if (numOfX > numOfO) return 1;
-    if ((numOfX + numOfO) == 9) return 2;
   }
 
   const winConditions = (board, piece) => {
@@ -40,20 +39,19 @@ const gameMaster = (() => {
   
   const didYouWin = (board, player) => {
     let winString = '';
-    if (winConditions(board, player.shape)) {
+    if (winConditions(board, player.shape) && board.includes(undefined)) {
       if (player.name != "") {
         winString = player.name + ' wins!';
       } else {
         winString = player.shape + ' wins!';
       }
+    } else if (!board.includes(undefined)) {
+      winString = "Tie game!"
+
     }
     gameAlert.textContent = winString;
   }
   
-  const tieGame = (board) => {
-    tieString = 'Tie Game!';
-    gameAlert.textContent = tieString;
-  }
   
   const playSpot = playArea.addEventListener('click', function(event) {
     boardSpot = parseInt(event.originalTarget.slot);
@@ -76,9 +74,9 @@ const gameMaster = (() => {
     }
     boxMaker(gameMaster.board);
   });
-  return {board, yourTurn, winConditions, didYouWin, tieGame,  playArea };
+  return {board, yourTurn, winConditions, didYouWin, playArea };
 })();
-
+//
   // Factories
 
 const playerFactory = (name, shape) => {
